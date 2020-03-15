@@ -10,6 +10,7 @@ class SensorService:
         self.sensor_data_len = 8  # x, y, z, a_x, a_y, a_z, rot_x, rot_y
 
     def record_sensor(self, datapoints: int = 100) -> str:
+        print('start collecting {} datapoints'.format(datapoints))
         data = np.zeros(shape=(datapoints, self.sensor_data_len), dtype=np.float)
         for i in range(datapoints):
             data[i] = self.sensor.get_data()
