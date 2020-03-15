@@ -36,21 +36,39 @@ class MPU6050:
     ################################# READ VALUES FROM SENSOR ###############################
     #########################################################################################
 
+    # all
+    def get_data(self):
+        x, y, z = self.get_gyro()
+        a_x, a_y, a_z = self.get_accelerometer()
+        a_x_scale = self.__scale_accelerometer__(a_x)
+        a_y_scale = self.__scale_accelerometer__(a_y)
+        a_z_scale = self.__scale_accelerometer__(a_z)
+        rot_x, rot_y = self.calculate_rotation(a_x_scale, a_y_scale, a_z_scale)
+        return x, y, z, a_x, a_y, a_z, rot_x, rot_y
+
+    def print_data(self):
+        x, y, z, a_x, a_y, a_z, rot_x, rot_y = self.get_data()
+        print('Gyroscope x: {} , y: {} , z: {}'.format(x, y, z))
+        print("---------------------")
+        print('Accelerometer x: {} , y: {} , z: {}'.format(a_x, a_y, a_z))
+        print("---------------------")
+        print("Rotation x: {}, y: {}".format(rot_x, rot_y))
+
     # gyroscope
     def get_gyro(self, scaled: bool = False):
         return self.__get_gyro_x__(scaled), self.__get_gyro_y__(scaled), self.__get_gyro_z__(scaled)
 
     def __get_gyro_x__(self, scaled: bool = False):
         x = self.__read_word_2c__(0x43)
-        return x / 131 if scaled else x
+        return self.__scale_gyro__(x) if scaled else x
 
     def __get_gyro_y__(self, scaled: bool = False):
         y = self.__read_word_2c__(0x45)
-        return y / 131 if scaled else y
+        return self.__scale_gyro__(y) if scaled else y
 
     def __get_gyro_z__(self, scaled: bool = False):
         z = self.__read_word_2c__(0x47)
-        return z / 131 if scaled else z
+        return self.__scale_gyro__(z) if scaled else z
 
     # accelerometer
     def get_accelerometer(self, scaled: bool = False):
@@ -58,19 +76,28 @@ class MPU6050:
 
     def __get_accel_x__(self, scaled: bool = False):
         x = self.__read_word_2c__(0x3b)
-        return x / 16384 if scaled else x
+        return self.__scale_accelerometer__(x) if scaled else x
 
     def __get_accel_y__(self, scaled: bool = False):
         y = self.__read_word_2c__(0x3d)
-        return y / 16384 if scaled else y
+        return self.__scale_accelerometer__(y) if scaled else y
 
     def __get_accel_z__(self, scaled: bool = False):
         z = self.__read_word_2c__(0x3f)
-        return z / 16384 if scaled else z
+        return self.__scale_accelerometer__(z) if scaled else z
 
     #########################################################################################
     ################################# CALCULATE SENSOR VALUES ###############################
     #########################################################################################
+
+    @staticmethod
+    def __scale_gyro__(value):
+        return value / 131
+
+    @staticmethod
+    def __scale_accelerometer__(value):
+        return value / 16384
+
     @staticmethod
     def __calculate_distance__(a, b):
         return math.sqrt((a * a) + (b * b))
