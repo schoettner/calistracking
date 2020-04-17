@@ -6,8 +6,8 @@ from dto.sensor_data import SensorData
 
 class KafkaService:
 
-    def __init__(self):
-        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+    def __init__(self, bootstrap_server: str = 'localhost:9092'):
+        self.producer = KafkaProducer(bootstrap_servers=[bootstrap_server],
                                       value_serializer=lambda m: json.dumps(m).encode('ascii'))
         self.topic = 'sensor_data_v0'
 
