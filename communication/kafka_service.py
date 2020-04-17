@@ -1,4 +1,5 @@
 from kafka import KafkaProducer
+import json
 
 from dto.sensor_data import SensorData
 
@@ -6,10 +7,17 @@ from dto.sensor_data import SensorData
 class KafkaService:
 
     def __init__(self):
-        self.producer = KafkaProducer(bootstrap_servers=['broker1:1234'])
+        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                                      value_serializer=lambda m: json.dumps(m).encode('ascii'))
         self.topic = 'sensor_data_v0'
 
     def send_sensor_data(self, data: SensorData):
         message = data.to_json()
         self.producer.send(topic=self.topic, value=message)
+        self.producer.flush()
 
+
+if __name__ == "__main__":
+    service = KafkaService()
+    dummy = SensorData()
+    service.send_sensor_data(dummy)
