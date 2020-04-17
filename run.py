@@ -3,8 +3,8 @@ import argparse
 from flask import Flask
 
 from sensor.mpu_6050 import MPU6050
-from sensor.sensor_controller import SensorController
-from sensor.sensor_service import SensorService
+from communication.flask_controller import SensorController
+from communication.sensor_service import SensorService
 
 
 def parse_arguments() -> argparse.Namespace:

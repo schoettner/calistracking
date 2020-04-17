@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from sensor.sensor_service import SensorService
+from communication.sensor_service import SensorService
 
 
 class SensorController(Blueprint):

@@ -2,3 +2,5 @@ argparse
 flask
 numpy
 smbus
+kafka
+dataclasses-json
