@@ -6,7 +6,7 @@ from sender.sensor.mpu_6050_sensor import MPU6050Sensor
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--kafka', help='kafka Bootstrap server', type=str, defualt='localhost:9092')
+    parser.add_argument('--kafka', help='kafka Bootstrap server', type=str, default='localhost:9092')
     return parser.parse_args()
 
 
