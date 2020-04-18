@@ -15,6 +15,6 @@ services:
     links:
      - zookeeper
     environment:
-     - KAFKA_ADVERTISED_HOST_NAME=localhost
+     - KAFKA_ADVERTISED_HOST_NAME=192.168.2.108
      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
      - KAFKA_ADVERTISED_PORT=9092

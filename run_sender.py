@@ -1,7 +1,7 @@
 import argparse
 
-from sender.communication.kafka_service import KafkaService
-from sender.sensor.mpu_6050_sensor import MPU6050Sensor
+from sender.kafka_sender import KafkaSender
+from sender.mpu_6050_sensor import MPU6050Sensor
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -12,7 +12,7 @@ def parse_arguments() -> argparse.Namespace:
 
 def main(args: argparse.Namespace):
     sensor = MPU6050Sensor()
-    service = KafkaService(bootstrap_server=args.kafka)
+    service = KafkaSender(bootstrap_server=args.kafka)
     while True:
         data = sensor.read_sensor()
         service.send_sensor_data(data)
