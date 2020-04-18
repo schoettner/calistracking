@@ -18,7 +18,7 @@ class KafkaReceiver:
 
 
 if __name__ == "__main__":
-    consumer = KafkaReceiver.create_consumer('my-test-03', bootstrap_server='192.168.2.108:9092')
+    consumer = KafkaReceiver.create_consumer('my-test-05', bootstrap_server='192.168.2.108:9092')
     for message in consumer:
         print("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
                                              message.offset, message.key,
