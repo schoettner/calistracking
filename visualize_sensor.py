@@ -8,14 +8,14 @@ from dto.sensor_data import SensorData
 from receiver.kafka_receiver import KafkaReceiver
 
 verticies = (
-    (1, -1, -0.1),
-    (1, 1, -0.1),
-    (-1, 1, -0.1),
-    (-1, -1, -0.1),
-    (1, -1, 0.1),
-    (1, 1, 0.1),
-    (-1, -1, 0.1),
-    (-1, 1, 0.1)
+    (0.5, -1, -0.1),
+    (0.5, 1, -0.1),
+    (-0.5, 1, -0.1),
+    (-0.5, -1, -0.1),
+    (0.5, -1, 0.1),
+    (0.5, 1, 0.1),
+    (-0.5, -1, 0.1),
+    (-0.5, 1, 0.1)
 )
 
 edges = (
@@ -57,7 +57,7 @@ def rotate(x: float, y: float):
 
 
 def main():
-    consumer = KafkaReceiver.create_consumer('my-test-18', bootstrap_server='192.168.2.108:9092')
+    consumer = KafkaReceiver.create_consumer('my-test-11', bootstrap_server='192.168.2.108:9092')
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
